@@ -6,12 +6,12 @@ describe("CabrestosHelper", () => {
   const notDivisor = 30;
   const divisor = 20;
 
-  const invalidInput = new CabrestosHelper(
+  const invalidInput = CabrestosHelper.fromStandardInput(
     flagLengthMeters,
     notDivisor,
     cLineMeters
   );
-  const validInput = new CabrestosHelper(
+  const validInput = CabrestosHelper.fromStandardInput(
     flagLengthMeters,
     divisor,
     cLineMeters
@@ -32,8 +32,8 @@ describe("CabrestosHelper", () => {
       const suggestion = invalidInput.generateSuggestion();
       expect(suggestion).not.toBe(invalidInput);
       expect(suggestion.validateInput()).toEqual(true);
-      expect(suggestion.flagSupportLengthMeters).toEqual(1.2);
-      expect(suggestion.centerLineLengthMeters).toEqual(cLineMeters);
+      expect(suggestion.flagSupportLengthCMeters).toEqual(120);
+      expect(suggestion.centerLineLengthCMeters).toEqual(cLineMeters * 100);
       expect(suggestion.lineSeparationCentimeters).toEqual(notDivisor);
     });
 
@@ -44,8 +44,8 @@ describe("CabrestosHelper", () => {
   });
 
   describe("calculateCabrestos", () => {
-    const evenConfiguration = new CabrestosHelper(1, 20, 5);
-    const oddConfiguration = new CabrestosHelper(1, 25, 5);
+    const evenConfiguration = CabrestosHelper.fromStandardInput(1, 20, 5);
+    const oddConfiguration = CabrestosHelper.fromStandardInput(1, 25, 5);
 
     test("raises exception if configuration is not valid", () => {
       expect(() => invalidInput.calculateCabrestos()).toThrow();
@@ -54,13 +54,13 @@ describe("CabrestosHelper", () => {
     test("with even configuration", () => {
       const cal = evenConfiguration.calculateCabrestos();
       expect(cal.length).toEqual(6);
-      expect(cal).toEqual([5.02, 5.01, 5.0, 5.0, 5.01, 5.02]);
+      expect(cal).toEqual([502.49, 500.9, 500.1, 500.1, 500.9, 502.49]);
     });
 
     test("with odd configuration", () => {
       const cal = oddConfiguration.calculateCabrestos();
       expect(cal.length).toEqual(5);
-      expect(cal).toEqual([5.02, 5.01, 5.0, 5.01, 5.02]);
+      expect(cal).toEqual([502.49, 500.62, 500, 500.62, 502.49]);
     });
   });
 });
