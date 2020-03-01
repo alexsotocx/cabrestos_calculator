@@ -1,12 +1,12 @@
 export class CabrestosHelper {
   constructor(
-    readonly flagSupportLengthCMeters: number,
-    readonly lineSeparationCentimeters: number,
-    readonly centerLineLengthCMeters: number
+    readonly flagSupportLength: number,
+    readonly lineSeparation: number,
+    readonly centerLineLength: number
   ) {}
 
   validateInput(): boolean {
-    return this.flagSupportLengthCMeters % this.lineSeparationCentimeters === 0;
+    return this.flagSupportLength % this.lineSeparation === 0;
   }
 
   generateSuggestion(): CabrestosHelper {
@@ -15,12 +15,12 @@ export class CabrestosHelper {
     }
     const validFlagSLengthCM =
       Math.ceil(
-        this.flagSupportLengthCMeters / this.lineSeparationCentimeters
-      ) * this.lineSeparationCentimeters;
+        this.flagSupportLength / this.lineSeparation
+      ) * this.lineSeparation;
     return new CabrestosHelper(
       validFlagSLengthCM,
-      this.lineSeparationCentimeters,
-      this.centerLineLengthCMeters
+      this.lineSeparation,
+      this.centerLineLength
     );
   }
 
@@ -29,16 +29,16 @@ export class CabrestosHelper {
       throw new Error("Invalid Configuration");
     }
     const output: number[] = [];
-    const farestPointToCenterCM = this.flagSupportLengthCMeters / 2;
+    const farestPointToCenterCM = this.flagSupportLength / 2;
     const cabrestosTotal =
-      this.flagSupportLengthCMeters / this.lineSeparationCentimeters + 1;
+      this.flagSupportLength / this.lineSeparation + 1;
     for (let i = 0; i < cabrestosTotal; i++) {
       const distanceToCenterCm = Math.abs(
-        farestPointToCenterCM - i * this.lineSeparationCentimeters
+        farestPointToCenterCM - i * this.lineSeparation
       );
       const cabresto = this.distancePit(
         distanceToCenterCm,
-        this.centerLineLengthCMeters
+        this.centerLineLength
       );
       output.push(+cabresto.toFixed(2));
     }

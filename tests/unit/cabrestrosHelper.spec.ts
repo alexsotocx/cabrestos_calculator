@@ -32,9 +32,9 @@ describe("CabrestosHelper", () => {
       const suggestion = invalidInput.generateSuggestion();
       expect(suggestion).not.toBe(invalidInput);
       expect(suggestion.validateInput()).toEqual(true);
-      expect(suggestion.flagSupportLengthCMeters).toEqual(120);
-      expect(suggestion.centerLineLengthCMeters).toEqual(cLineMeters * 100);
-      expect(suggestion.lineSeparationCentimeters).toEqual(notDivisor);
+      expect(suggestion.flagSupportLength).toEqual(120);
+      expect(suggestion.centerLineLength).toEqual(cLineMeters * 100);
+      expect(suggestion.lineSeparation).toEqual(notDivisor);
     });
 
     test("if configuration is already valid returns itself", () => {

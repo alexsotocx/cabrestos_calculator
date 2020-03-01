@@ -33,9 +33,26 @@
       </article>
       <article class="form-group">
         <button @click="calculate" :disabled="!valid">Calcular</button>
+        <button @click="reset">Reiniciar</button>
       </article>
     </section>
-    <section class="suggestion"></section>
+    <section class="suggestion" v-if="suggestion">
+      <p>Usando configuración ideal:</p>
+      <ul>
+        <li>
+          <span class="entry">Ancho de la antena:</span>
+          {{ suggestion.flagSupportLength / 100 }}m
+        </li>
+        <li>
+          <span class="entry">Longitud del cabresto central(m):</span>
+          {{ suggestion.centerLineLength / 100 }}m
+        </li>
+        <li>
+          <span class="entry">Separación entre cabrestos(cm):</span>
+          {{ suggestion.lineSeparation }}cm
+        </li>
+      </ul>
+    </section>
     <section class="results" v-if="resultsFilled">
       <table>
         <thead>
@@ -68,16 +85,30 @@ export default class App extends Vue {
   flagSupportLengthMeters: number | null = null;
   centerLineLengthMeters: number | null = null;
   lineSeparationCm: number | null = null;
-
+  suggestion: CabrestosHelper | null = null;
   results: number[] | null = null;
+
+  reset() {
+    this.flagSupportLengthMeters = null;
+    this.centerLineLengthMeters = null;
+    this.lineSeparationCm = null;
+    this.results = null;
+    this.suggestion = null;
+  }
 
   calculate() {
     if (this.valid) {
-      const util = CabrestosHelper.fromStandardInput(
+      let util = CabrestosHelper.fromStandardInput(
+        // eslint-disable-next-line
         this.flagSupportLengthMeters!,
+        // eslint-disable-next-line
         this.lineSeparationCm!,
+        // eslint-disable-next-line
         this.centerLineLengthMeters!
       );
+      if (!util.validateInput()) {
+        util = this.suggestion = util.generateSuggestion();
+      }
       this.results = util.calculateCabrestos();
     }
   }
