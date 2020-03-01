@@ -44,6 +44,7 @@
       <section class="logo">
         <a href="https://www.facebook.com/Disproyect">
           <img src="./assets/logo.png" />
+          <h3>https://www.facebook.com/Disproyect/</h3>
         </a>
       </section>
     </section>
@@ -200,6 +201,11 @@ html {
     font-size: 2.5rem;
     font-family: "Trade Winds", "Roboto", "serif";
   }
+  h3 {
+    font-size: 1rem;
+    margin-top: 0;
+    font-family: "Trade Winds", "Roboto", "serif";
+  }
   .top {
     display: flex;
     width: 100%;
@@ -243,8 +249,7 @@ html {
   .results {
     border-top: 5px dotted gray;
     margin-top: 1rem;
-    h2,
-    h3 {
+    h2 {
       font-size: 2rem;
       font-family: "Trade Winds", "Roboto", "serif";
       margin: 1rem 0;
@@ -253,6 +258,7 @@ html {
     h3 {
       font-size: 1.5rem;
       margin-top: 0;
+      font-family: "Trade Winds", "Roboto", "serif";
     }
     .copy {
       margin-bottom: 0.5rem;
