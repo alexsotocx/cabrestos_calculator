@@ -51,8 +51,8 @@
       <h2>Resultados</h2>
       <button class="copy btn btn-success" @click="copy">Copiar</button>
       <article class="result-container" ref="results">
-        <section class="suggestion" v-if="suggestion">
-          <p>Usando configuración ideal:</p>
+        <section class="suggestion">
+          <h3>Usando configuración ideal:</h3>
           <ul>
             <li>
               <span class="entry">Ancho de la antena:</span>
@@ -128,8 +128,9 @@ export default class App extends Vue {
         Number(this.centerLineLengthMeters!)
       );
       if (!util.validateInput()) {
-        util = this.suggestion = util.generateSuggestion();
+        util = util.generateSuggestion();
       }
+      this.suggestion = util;
       this.results = util.calculateCabrestos();
     }
   }
@@ -242,11 +243,16 @@ html {
   .results {
     border-top: 5px dotted gray;
     margin-top: 1rem;
-    h2 {
+    h2,
+    h3 {
       font-size: 2rem;
       font-family: "Trade Winds", "Roboto", "serif";
       margin: 1rem 0;
       text-align: center;
+    }
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 0;
     }
     .copy {
       margin-bottom: 0.5rem;
