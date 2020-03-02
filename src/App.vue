@@ -1,10 +1,14 @@
 <template>
   <article class="app">
     <h1 class="title">Calculadora de cabrestos</h1>
+    <article class="language-switcher">
+      <button class="btn btn-outline-info" @click="swtichLanguage('es')">Español</button>
+      <button class="btn btn-outline-info" @click="swtichLanguage('pt')">Portugues</button>
+    </article>
     <section class="top">
       <section class="form">
         <article class="form-group">
-          <label for="flagSupportLengthMeters">Ancho de la antena(m):</label>
+          <label for="flagSupportLengthMeters">{{ $t("supportLength") }}:</label>
           <input
             name="flagSupportLengthMeters"
             type="number"
@@ -15,7 +19,7 @@
           />
         </article>
         <article class="form-group">
-          <label for="centerLineLengthMeters">Longitud del cabresto central(m):</label>
+          <label for="centerLineLengthMeters">{{ $t("centerLineLength") }}:</label>
           <input
             name="centerLineLengthMeters"
             type="number"
@@ -26,7 +30,7 @@
           />
         </article>
         <article class="form-group">
-          <label for="lineSeparationCm">Separación entre cabrestos(cm):</label>
+          <label for="lineSeparationCm">{{ $t("separation") }}:</label>
           <input
             name="lineSeparationCm"
             type="number"
@@ -56,15 +60,15 @@
           <h3>Usando configuración ideal:</h3>
           <ul>
             <li>
-              <span class="entry">Ancho de la antena:</span>
+              <span class="entry">{{ $t("supportLength") }}</span>
               {{ suggestion.flagSupportLength / 100 }}m
             </li>
             <li>
-              <span class="entry">Longitud del cabresto central:</span>
+              <span class="entry">{{ $t("centerLineLength") }}</span>
               {{ suggestion.centerLineLength / 100 }}m
             </li>
             <li>
-              <span class="entry">Separación entre cabrestos:</span>
+              <span class="entry">{{ $t("separation") }}</span>
               {{ suggestion.lineSeparation }}cm
             </li>
           </ul>
@@ -74,7 +78,7 @@
             <thead>
               <tr>
                 <th scope="col">##</th>
-                <th scope="col">Longitud(m)</th>
+                <th scope="col">{{ $t("length") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -100,16 +104,22 @@
 import { Component, Vue } from "vue-property-decorator";
 import { CabrestosHelper } from "./util/cabrestosHelper";
 
-@Component({
-  components: {}
-})
+@Component({})
 export default class App extends Vue {
   flagSupportLengthMeters: number | string = 0;
   centerLineLengthMeters: number | string = 0;
   lineSeparationCm: number | string = 0;
   suggestion: CabrestosHelper | null = null;
   results: number[] | null = null;
+  locale = "es";
 
+  beforeMount() {
+    this.$i18n.locale = navigator.language;
+  }
+
+  swtichLanguage(language: string) {
+    this.locale = this.$i18n.locale = language;
+  }
   reset() {
     this.flagSupportLengthMeters = 0;
     this.centerLineLengthMeters = 0;
@@ -133,6 +143,12 @@ export default class App extends Vue {
       }
       this.suggestion = util;
       this.results = util.calculateCabrestos();
+      setTimeout(() => {
+        (this.$refs.results as Element).scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        });
+      }, 100);
     }
   }
 
@@ -196,6 +212,18 @@ html {
 .app {
   @extend .container;
   position: relative;
+  .language-switcher {
+    text-align: center;
+    margin-bottom: 1rem;
+    .btn {
+      font-size: 0.8rem;
+      margin-right: 1rem;
+    }
+
+    @include media-breakpoint-up(sm) {
+      text-align: left;
+    }
+  }
   .title {
     text-align: center;
     font-size: 2.5rem;
@@ -219,6 +247,7 @@ html {
           margin-right: 1rem;
           &:disabled {
             background-color: grey;
+            border-color: grey;
           }
         }
       }
