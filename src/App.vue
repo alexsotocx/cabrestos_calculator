@@ -2,13 +2,19 @@
   <article class="app">
     <h1 class="title">Calculadora de cabrestos</h1>
     <article class="language-switcher">
-      <button class="btn btn-outline-info" @click="swtichLanguage('es')">Español</button>
-      <button class="btn btn-outline-info" @click="swtichLanguage('pt')">Portugues</button>
+      <button class="btn btn-outline-info" @click="swtichLanguage('es')">
+        Español
+      </button>
+      <button class="btn btn-outline-info" @click="swtichLanguage('pt')">
+        Portugues
+      </button>
     </article>
     <section class="top">
       <section class="form">
         <article class="form-group">
-          <label for="flagSupportLengthMeters">{{ $t("supportLength") }}:</label>
+          <label for="flagSupportLengthMeters"
+            >{{ $t("supportLength") }}:</label
+          >
           <input
             name="flagSupportLengthMeters"
             type="number"
@@ -19,7 +25,9 @@
           />
         </article>
         <article class="form-group">
-          <label for="centerLineLengthMeters">{{ $t("centerLineLength") }}:</label>
+          <label for="centerLineLengthMeters"
+            >{{ $t("centerLineLength") }}:</label
+          >
           <input
             name="centerLineLengthMeters"
             type="number"
@@ -41,7 +49,9 @@
           />
         </article>
         <article class="form-group buttons">
-          <button @click="calculate" class="btn btn-primary" :disabled="!valid">Calcular</button>
+          <button @click="calculate" class="btn btn-primary" :disabled="!valid">
+            Calcular
+          </button>
           <button @click="reset" class="btn btn-warning">Reiniciar</button>
         </article>
       </section>
@@ -146,7 +156,7 @@ export default class App extends Vue {
       setTimeout(() => {
         (this.$refs.results as Element).scrollIntoView({
           behavior: "smooth",
-          block: "end",
+          block: "end"
         });
       }, 100);
     }

@@ -14,9 +14,8 @@ export class CabrestosHelper {
       return this;
     }
     const validFlagSLengthCM =
-      Math.ceil(
-        this.flagSupportLength / this.lineSeparation
-      ) * this.lineSeparation;
+      Math.ceil(this.flagSupportLength / this.lineSeparation) *
+      this.lineSeparation;
     return new CabrestosHelper(
       validFlagSLengthCM,
       this.lineSeparation,
@@ -30,8 +29,7 @@ export class CabrestosHelper {
     }
     const output: number[] = [];
     const farestPointToCenterCM = this.flagSupportLength / 2;
-    const cabrestosTotal =
-      this.flagSupportLength / this.lineSeparation + 1;
+    const cabrestosTotal = this.flagSupportLength / this.lineSeparation + 1;
     for (let i = 0; i < cabrestosTotal; i++) {
       const distanceToCenterCm = Math.abs(
         farestPointToCenterCM - i * this.lineSeparation
