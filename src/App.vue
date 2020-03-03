@@ -62,7 +62,7 @@
         </a>
       </section>
     </section>
-    <section class="results" v-if="resultsFilled">
+    <section class="results" v-if="resultsFilled" ref="resultsContainer">
       <h2>Resultados</h2>
       <button class="copy btn btn-success" @click="copy">Copiar</button>
       <article class="result-container" ref="results">
@@ -154,9 +154,9 @@ export default class App extends Vue {
       this.suggestion = util;
       this.results = util.calculateCabrestos();
       setTimeout(() => {
-        (this.$refs.results as Element).scrollIntoView({
+        (this.$refs.resultsContainer as Element).scrollIntoView({
           behavior: "smooth",
-          block: "end"
+          block: "start"
         });
       }, 100);
     }
